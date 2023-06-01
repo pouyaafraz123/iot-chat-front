@@ -7,26 +7,60 @@
   top: 0;
   z-index: 200;
   background-color: #434c5d;
-  box-sizing: border-box;
-  transition: all ease 0.7s;
   border-radius: 0 20px 20px 0;
-  padding: 32px 16px;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+  transition: all ease 0.7s;
+  box-sizing: border-box;
+  overflow: hidden;
 
   &__SideBarLogo {
-    padding: 24px 16px;
+    cursor: pointer;
+    padding-left: 16px;
   }
 
   &__SideBarContent {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+
+    &__Option {
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all ease 0.7s;
+      width: 100%;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #535762;
+      }
+
+      &__Label {
+        color: #FF8A65;
+        margin-left: 16px;
+        font-size: 18px;
+        vertical-align: middle;
+      }
+    }
 
   }
 }
 
 .Open {
-  transform: translateX(0);
+  width: 400px;
 }
 
 .Close {
-  transform: translateX(100%);
+  width: 64px;
 }
 
 @media only screen and (max-width: 768.5px) {

@@ -5,11 +5,12 @@
   top: 0;
   left: 0;
   z-index: 150;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(7px);
 }
 
 @media only screen and (min-width: 768.5px) {
-  .BackDrop {
-    display: none;
-  }
+  //.BackDrop {
+  //  display: none;
+  //}
 }
