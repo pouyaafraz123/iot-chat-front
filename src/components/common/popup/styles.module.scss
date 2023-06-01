@@ -1,0 +1,22 @@
+.Popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  transition: all ease 0.5s;
+  z-index: 9999;
+
+  &__Panel {
+    position: relative;
+    background-color: var(--primary);
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+  }
+}

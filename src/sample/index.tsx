@@ -1,5 +1,6 @@
-const SamplePage = ()=>{
-  return <div>Sample</div>
+const SamplePage = () => {
+    return <div className={"container pt-5"}>
+    </div>
 };
 
 

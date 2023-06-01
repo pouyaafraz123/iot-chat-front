@@ -1,0 +1,61 @@
+.InputGroup {
+  width: 100%;
+  margin-bottom: 24px;
+  text-align: center;
+  &__Label {
+    //display: block;
+    padding-bottom: 8px;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  &__Error {
+    display: block;
+    color: #dc3545;
+    margin-top: 6px;
+  }
+  &__Input {
+    display: block;
+    padding: 12px;
+    border-radius: 12px;
+    outline: none;
+    border: 1px solid #eee;
+    width: 70%;
+    transition: all ease 0.7s;
+    text-align: center;
+    margin: 0 auto;
+    background-color: transparent;
+    color: #fff;
+    position: relative;
+
+    ::placeholder {
+      color: #fff;
+    }
+
+    &:focus {
+      width: 100%;
+      border: 1px solid var(--success);
+      box-shadow: 2px 0 10px #7edd70;
+    }
+
+    &[data-status="empty"] , &[data-status="invalid"] {
+      border: 1px solid var(--error);
+      box-shadow: 2px 0 10px #e69191;
+    }
+
+    &[data-status="valid"] {
+      border: 1px solid var(--success);
+      box-shadow: 2px 0 10px #7edd70;
+    }
+
+    &[data-status=""] {
+      .InputGroup__Input {
+        &:focus {
+          width: 100%;
+          border: 1px solid var(--success);
+          box-shadow: 2px 0 10px #7edd70;
+        }
+      }
+    }
+  }
+}
