@@ -2,8 +2,8 @@ import classes from "./styles.module.scss";
 import BackDrop from "../backdrop/index.tsx";
 import React from "react";
 import clsx from "clsx";
-import {HambergerMenu, MessageAdd1, Messages2, UserEdit} from "iconsax-react";
-import {Link, NavLink} from "react-router-dom";
+import {HambergerMenu, Logout, MessageAdd1, Messages2, UserEdit} from "iconsax-react";
+import {NavLink} from "react-router-dom";
 
 
 interface ISideBar {
@@ -25,17 +25,33 @@ const SideBar = ({open, close}: ISideBar) => {
                 </div>
                 <div
                     className={clsx([classes.SideBar__SideBarContent, "d-flex justify-content-end align-items-start flex-column mt-3"])}>
-                    <NavLink to={"/messages"} className={classes.SideBar__SideBarContent__Option}>
+                    {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+                    <NavLink onClick={open ? close : () => {
+                    }} to={"/messages"} className={classes.SideBar__SideBarContent__Option}>
                         <Messages2 size="32" color="#FF8A65"/>
-                        <span className={classes.SideBar__SideBarContent__Option__Label}>All Messages</span>
+                        <span className={classes.SideBar__SideBarContent__Option__Label}>All Channels</span>
                     </NavLink>
-                    <NavLink to={"/edit-profile"} className={classes.SideBar__SideBarContent__Option}>
+                    {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+                    <NavLink onClick={open ? close : () => {
+                    }} to={"/edit-profile"} className={classes.SideBar__SideBarContent__Option}>
                         <UserEdit size="32" color="#FF8A65"/>
                         <span className={classes.SideBar__SideBarContent__Option__Label}>Edit Profile</span>
                     </NavLink>
-                    <NavLink to={"/create-channel"} className={classes.SideBar__SideBarContent__Option}>
+                    {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+                    <NavLink onClick={open ? close : () => {
+                    }} to={"/create-channel"} className={classes.SideBar__SideBarContent__Option}>
                         <MessageAdd1 size="32" color="#FF8A65"/>
                         <span className={classes.SideBar__SideBarContent__Option__Label}>Create Channel</span>
+                    </NavLink>
+                    <NavLink onClick={open ? () => {
+                        localStorage.removeItem("access");
+                        close();
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    } : () => {
+                        localStorage.removeItem("access");
+                    }} to={"/login"} className={classes.SideBar__SideBarContent__Option}>
+                        <Logout size="32" color="#FF8A65"/>
+                        <span className={classes.SideBar__SideBarContent__Option__Label}>Logout</span>
                     </NavLink>
                 </div>
             </div>

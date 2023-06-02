@@ -1,6 +1,6 @@
 import classes from "./styles.module.scss";
 import Input from "../../components/core/input";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../../components/core/button";
 import {useNavigate} from "react-router-dom";
 
@@ -30,6 +30,12 @@ const Register = () => {
         username: '',
         password: '',
     });
+
+    useEffect(() => {
+        if (localStorage.getItem("access") === "true") {
+            navigate("/", {replace: true})
+        }
+    }, [])
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setInputs((prevInputs) => ({

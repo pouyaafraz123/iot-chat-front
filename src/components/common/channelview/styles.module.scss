@@ -1,0 +1,57 @@
+.ChannelView {
+  width: 100%;
+  text-decoration: none;
+  padding: 18px 4px;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  transition: all ease 0.7s;
+
+  &:hover {
+    .ChannelView__ActionBox {
+      display: flex;
+    }
+  }
+
+  &_Image {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+  }
+
+  &__Title {
+    color: white;
+  }
+
+  &:hover {
+    background-color: #2d4d3c;
+  }
+
+
+  &__ActionBox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    margin-right: 4px;
+
+    &__ActionButton {
+      padding: 4px;
+      border-radius: 4px;
+      transition: all ease 0.5s;
+
+      &:hover {
+        background-color: #171a23;
+      }
+    }
+  }
+}
