@@ -38,6 +38,10 @@ export const router: RouteObject[] = [
         , path: "/messages",
     },
     {
+        element: <ProtectedRoute target={"/login"}><MainLayout><Chat/></MainLayout></ProtectedRoute>
+        , path: "/messages/:id",
+    },
+    {
         element: <ProtectedRoute target={"/login"}><MainLayout><Welcome/></MainLayout></ProtectedRoute>
         , path: "/",
     },

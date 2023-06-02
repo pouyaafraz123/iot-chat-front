@@ -1,6 +1,6 @@
 import classes from "./styles.module.scss";
 import Input from "../../components/core/input";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../../components/core/button";
 import {useNavigate} from "react-router-dom";
 
@@ -17,12 +17,19 @@ const Login = () => {
             [name]: value,
         }));
     };
+
+    useEffect(() => {
+        if (localStorage.getItem("access") === "true") {
+            navigate("/", {replace: true})
+        }
+    }, [])
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!event.currentTarget.checkValidity()) {
             event.preventDefault();
         } else {
-            // Rest Action
+            localStorage.setItem("access", "true");
+            navigate('/', {replace: true})
         }
     };
     return (
@@ -45,7 +52,6 @@ const Login = () => {
                     <div className="col-lg-4 col-md-8 col-12">
                         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
                         <Button title={"Login"} action={() => {
-                            navigate("/")
                         }} type={"submit"} color={"success"}/>
                         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
                         <Button title={"Create Account"} action={() => {
