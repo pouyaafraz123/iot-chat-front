@@ -1,6 +1,6 @@
-import classes from "./styles.module.scss"
-import {useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import classes from "./styles.module.scss";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import Input from "../../components/core/input";
 import Button from "../../components/core/button";
 import Popup from "../../components/common/popup";
@@ -109,8 +109,6 @@ const EditProfile = () => {
                     <div className="col-lg-6 col-12">
                         <Button title={"Delete Forever (This action can't be undo !"} action={() => {
                             setOpenPopup(false)
-                            // localStorage.removeItem('access');
-                            // navigate('../login',{replace:true})
                         }} type={"submit"} color={"danger"}/>
                     </div>
                 </form>

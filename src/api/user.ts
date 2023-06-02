@@ -1,3 +1,5 @@
+export type TUserType = "super" | "admin" | "user";
+
 export interface IUser {
   _id?: string;
   username: string;
@@ -10,5 +12,5 @@ export interface IUser {
   displayName: string;
   bio?: string;
   password: string;
-  type: "super" | "admin" | "user";
+  type: TUserType;
 }

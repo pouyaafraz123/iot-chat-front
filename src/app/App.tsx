@@ -7,6 +7,8 @@ import { ToastContainer } from "react-toastify";
 import { TOAST_PROPS } from "../constant/toast";
 import "react-toastify/dist/ReactToastify.css";
 import { router } from "../constant/router";
+import { APIConfigurator } from "../components/other/APIConfigurator.tsx";
+import { AuthProvider } from "../hooks/useAuth.tsx";
 
 function App() {
   const client = new QueryClient({
@@ -15,10 +17,13 @@ function App() {
 
   return (
     <QueryClientProvider client={client}>
+      <AuthProvider>
         <div className={clsx(classes.app)}>
           <Router />
         </div>
         <ToastContainer {...TOAST_PROPS} />
+        <APIConfigurator />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

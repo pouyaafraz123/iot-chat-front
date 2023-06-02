@@ -1,14 +1,16 @@
-import classes from "./styles.module.scss"
+import classes from "./styles.module.scss";
 import React from "react";
 import clsx from "clsx";
+import { useAuth } from "../../../hooks/useAuth.tsx";
 
 interface IFormLayout {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const FormLayout = ({children}: IFormLayout) => {
+  const {isLoggedIn} = useAuth();
     return (
-        localStorage.getItem("access") === "true" ?
+        isLoggedIn ?
             <div className={classes.FormLayout}>{children}</div>
             :
             <div className="container">

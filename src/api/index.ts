@@ -1,14 +1,22 @@
 import axios, { AxiosResponse } from "axios";
 
 export const BASE_URL = "https://iot-chat-server.iran.liara.run/graphql";
+//export const BASE_URL = "http://localhost:8080/graphql";
 
 const apiCaller = axios.create({
   baseURL: BASE_URL,
 });
 
+export interface IError {
+  message: string,
+  status: number,
+  data: { [key: string]: string }[]
+}
+
+
 export interface IServerResponse<T> {
   detail?: string;
-  errors?: {message:string,status:number,data:{ [key: string]: string }[]};
+  errors?: IError[];
   data?: T;
 }
 
