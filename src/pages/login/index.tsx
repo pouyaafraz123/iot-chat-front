@@ -33,13 +33,14 @@ const Login = () => {
                     <div className="col-lg-6 col-md-6 col-12">
                         <Input label={"Username"}
                                placeHolder={"Enter your Username ..."}
-                               name={"Username"} id={"Username"} type={"text"}
+                               name={"username"} id={"username"} type={"text"}
                                value={inputs.username} handleChange={handleChange} status={''} required/>
                     </div>
                     <div className="col-lg-6 col-md-6 col-12">
-                        <Input label={"Password"} placeHolder={"Enter your Password ..."} name={"Password"}
-                               id={"Password"}
-                               type={"password"} value={inputs.password} handleChange={handleChange} status={''} required/>
+                        <Input label={"Password"} placeHolder={"Enter your Password ..."} name={"password"}
+                               id={"password"}
+                               type={"password"} value={inputs.password} handleChange={handleChange} status={''}
+                               required/>
                     </div>
                     <div className="col-lg-4 col-md-8 col-12">
                         {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
