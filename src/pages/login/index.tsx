@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.tsx";
 
 const Login = () => {
-  const { login,isLoggedIn} = useAuth();
+  const { login,isLoggedIn,isLogging} = useAuth();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     username: "",
@@ -71,6 +71,7 @@ const Login = () => {
           <div className="col-lg-4 col-md-8 col-12">
             {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
             <Button
+              isLoading={isLogging}
               title={"Login"}
               action={() => {}}
               type={"submit"}

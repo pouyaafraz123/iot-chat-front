@@ -16,7 +16,14 @@ const AuthContext = React.createContext<{
   login: (data: ILoginParam) => void;
   logout: () => void;
   isLoggedIn: boolean;
-}>({ isLoggedIn: false, login: () => {}, logout: () => {}, user: undefined });
+  isLogging: boolean;
+}>({
+  isLoggedIn: false,
+  login: () => {},
+  logout: () => {},
+  user: undefined,
+  isLogging: false,
+});
 
 const readLoginStatus = () => {
   const temp = localStorage.getItem(KEY);
@@ -46,17 +53,17 @@ function AuthProvider({ children }: PropsWithChildren<any>) {
           setUser(
             data?.data
               ? {
-                  username: data?.data?.user?.username,
-                  token: data?.data?.token,
+                  username: data?.data?.data?.login?.user?.username,
+                  token: data?.data?.data?.login?.token,
                 }
               : undefined
           );
-          setAxiosToken(data?.data?.token);
+          setAxiosToken(data?.data?.data?.login?.token);
           localStorage.setItem(
             KEY,
             JSON.stringify({
-              username: data?.data?.user?.username,
-              token: data?.data?.token,
+              username: data?.data?.data?.login?.user?.username,
+              token: data?.data?.data?.login?.token,
             })
           );
           setIsLoggedIn(true);
@@ -78,6 +85,7 @@ function AuthProvider({ children }: PropsWithChildren<any>) {
         logout: logoutFunc,
         login: loginFunc,
         isLoggedIn: isLoggedIn,
+        isLogging: loginMutate.isLoading,
       }}
     >
       {children}

@@ -56,7 +56,7 @@ const Register = () => {
       : null;
   };
 
-  const { mutate } = useMutation(signup);
+  const { mutate,isLoading } = useMutation(signup);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -256,6 +256,7 @@ const Register = () => {
               }}
               type={"submit"}
               color={"warning"}
+              isLoading={isLoading}
             />
             {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
             <Button

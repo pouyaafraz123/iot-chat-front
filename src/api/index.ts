@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
-export const BASE_URL = "https://iot-chat-server.iran.liara.run/graphql";
-//export const BASE_URL = "http://localhost:8080/graphql";
+// export const BASE_URL = "https://iot-chat-server.iran.liara.run/graphql";
+export const BASE_URL = "http://localhost:8080/graphql";
 
 const apiCaller = axios.create({
   baseURL: BASE_URL,
@@ -14,15 +14,11 @@ export interface IError {
 }
 
 
-export interface IServerResponse<T> {
-  detail?: string;
-  errors?: IError[];
-  data?: T;
-}
+
 
 export interface IResponse<T> extends AxiosResponse {
-  data: T;
-  detail: string;
+  errors?: IError[];
+  data: {data: T};
 }
 
 export interface IPagination {
@@ -31,9 +27,10 @@ export interface IPagination {
   per_page: string;
 }
 
-export interface IPaginationParams {
+export interface IPaginationParam {
   page: number;
   per_page?: number;
+  query?:string;
 }
 
 export interface IPaginationTableList<T> extends IPagination {

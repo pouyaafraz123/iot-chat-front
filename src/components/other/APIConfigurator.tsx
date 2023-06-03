@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import apiCaller, { IError, IServerResponse } from "../../api";
+import apiCaller, { IError, IResponse } from "../../api";
 
 interface IAPIConfiguratorProps {
   axiosInstance?: AxiosInstance;
@@ -11,13 +11,13 @@ interface IAPIConfiguratorProps {
 }
 
 export function APIConfigurator({
-                                  axiosInstance = apiCaller,
-                                  onError = (error) => toast.error(error),
-                                }: IAPIConfiguratorProps) {
+  axiosInstance = apiCaller,
+  onError = (error) => toast.error(error),
+}: IAPIConfiguratorProps) {
   const { logout } = useAuth();
   const history = useNavigate();
 
-  const errorHandler = async (error: AxiosError<IServerResponse<any>>) => {
+  const errorHandler = async (error: AxiosError<IResponse<any>>) => {
     if (!error.response) {
       if (error.response !== "ERR_CANCELED") {
         // "ERR_CANCELED" happened if the file query or mutation has been canceled.
@@ -27,7 +27,8 @@ export function APIConfigurator({
       return Promise.reject(error);
     }
     if (error?.response?.data?.errors) {
-      const errorRes: IError | undefined = await error?.response?.data?.errors[0];
+      const errorRes: IError | undefined = await error?.response?.data
+        ?.errors[0];
 
       /* console.log(error?.response?.data?.detail);
       if (error?.response?.data?.detail) {
@@ -35,7 +36,6 @@ export function APIConfigurator({
         return Promise.reject(error);
       }*/
 
-      console.log(errorRes);
 
       onError(errorRes?.message || "Something went wrong!");
       if (errorRes?.status === 401) {

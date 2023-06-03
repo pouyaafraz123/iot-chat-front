@@ -19,9 +19,15 @@ export interface ISignupParam {
   password: string;
 }
 
-export function login(
-  data: ILoginParam
-): Promise<IResponse<{ user: IUser; token: string }>> {
+export interface ILogin {
+  login: { user: IUser; token: string };
+}
+
+export interface ISignup {
+  signup: IUser;
+}
+
+export function login(data: ILoginParam): Promise<IResponse<ILogin>> {
   return apiCaller.post(``, {
     query: `
       query login($data: loginParam!) {
@@ -47,7 +53,7 @@ export function login(
   });
 }
 
-export function signup(data: ISignupParam): Promise<IResponse<IUser>> {
+export function signup(data: ISignupParam): Promise<IResponse<ISignup>> {
   return apiCaller.post(``, {
     query: `
       mutation signup($data:signupParam!){

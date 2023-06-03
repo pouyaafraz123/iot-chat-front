@@ -1,7 +1,7 @@
 export type TUserType = "super" | "admin" | "user";
 
 export interface IUser {
-  _id?: string;
+  id?: string;
   username: string;
   email: string;
   avatar?: string;
