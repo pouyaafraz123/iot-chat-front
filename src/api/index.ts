@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
-// export const BASE_URL = "https://iot-chat-server.iran.liara.run/graphql";
-export const BASE_URL = "http://localhost:8080/graphql";
+export const BASE_URL = "https://iot-chat-server.iran.liara.run/graphql";
+// export const BASE_URL = "http://localhost:8080/graphql";
 
 const apiCaller = axios.create({
   baseURL: BASE_URL,
