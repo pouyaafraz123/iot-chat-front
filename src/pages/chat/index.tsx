@@ -4,21 +4,23 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Send2 } from "iconsax-react";
-import { IChannel, useAllChannels } from "../../api/channel.ts";
-import { useInView } from "react-intersection-observer";
+import { getUserChannels, IChannel } from "../../api/channel.ts";
 import Loader from "../../components/common/loader";
+import { useQuery } from "@tanstack/react-query";
+import useProfile from "../../hooks/useProfile.tsx";
 
 const Chat = () => {
   const params = useParams<{ id: string }>();
   const [currentChannel, setCurrentChannel] = useState<IChannel>();
   const [message, setMessage] = useState("");
-  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
-    useAllChannels();
-  const { ref, inView } = useInView();
-  if (inView) {
-    fetchNextPage();
-  }
-  const channels = data?.pages.flatMap((page) => page?.getChannels?.list) || [];
+  const profile = useProfile();
+  const id = profile?.data?.data?.data?.getCurrentUser?._id;
+  const { data, isLoading, isError } = useQuery(
+    [getUserChannels.name, id],
+    () => getUserChannels(id || ""),
+    { enabled: !!id }
+  );
+  const channels = data?.data?.data?.getUserChannels || [];
 
   useEffect(() => {
     setCurrentChannel(
@@ -44,11 +46,6 @@ const Chat = () => {
                   />
                 );
               })}
-              {hasNextPage && (
-                <button onClick={() => fetchNextPage()} ref={ref}>
-                  Load More
-                </button>
-              )}
             </div>
           </div>
           <div className="col-lg-8 col-md-8 col-6">

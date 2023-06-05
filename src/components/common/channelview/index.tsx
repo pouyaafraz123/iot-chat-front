@@ -5,10 +5,20 @@ import React, { useEffect, useState } from "react";
 import Popup from "../popup";
 import Input from "../../core/input";
 import Button from "../../core/button";
-import { useQuery } from "@tanstack/react-query";
-import { getChannel, IChannel } from "../../../api/channel.ts";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  addMemberToChannel,
+  deleteChannel,
+  getChannel,
+  getChannels,
+  getUserChannels,
+  IChannel,
+  IChannelParam,
+  updateChannel,
+} from "../../../api/channel.ts";
 import Loader from "../loader";
 import { BeatLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 export interface IChannelView {
   image: string;
@@ -34,9 +44,18 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
   const [newUserID, setNewUserID] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    console.log(inputs);
-  }, [inputs]);
+  const client = useQueryClient();
+
+  const { isLoading: isDeleting, mutate: deleteMutate } =
+    useMutation(deleteChannel);
+  const { isLoading: isUpdating, mutate: updateMutate } = useMutation(
+    [updateChannel.name, id],
+    (data: IChannelParam) => updateChannel(id, data)
+  );
+  const { isLoading: isAdding, mutate: addMutate } = useMutation(
+    [addMemberToChannel.name, id],
+    (user_id: string) => addMemberToChannel(id, user_id)
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,22 +69,6 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
           [name]: "",
         }))
       : null;
-  };
-  const handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!event.currentTarget.checkValidity()) {
-      event.preventDefault();
-    } else {
-      // Rest Action
-    }
-  };
-  const handleDelete = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!event.currentTarget.checkValidity()) {
-      event.preventDefault();
-    } else {
-      // Rest Action
-    }
   };
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,7 +100,23 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
     }
 
     if (isValid) {
-      console.log("Hello");
+      updateMutate(
+        {
+          name: inputs.channelName,
+          image: inputs.image,
+          displayName: inputs.displayName,
+          description: inputs.description,
+        },
+        {
+          onSuccess: () => {
+            client.invalidateQueries([getUserChannels.name]);
+            client.invalidateQueries([getChannels.name]);
+            client.invalidateQueries([getChannel.name]);
+            toast.success("Channel updated successfully.");
+            setOpenPopup(false);
+          },
+        }
+      );
     }
   };
 
@@ -108,7 +127,7 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
     console.log(inputs);
     if (action === "add") {
       setPopupElement(
-        <form onSubmit={handleAdd} noValidate className="row">
+        <div className="row">
           <div className="col-12">
             <h3 className="text-center text-white pb-4">New User ID</h3>
             <Input
@@ -137,17 +156,24 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
             <Button
               title={"Add User"}
               action={() => {
-                setOpenPopup(false);
+                addMutate(newUserID, {
+                  onSuccess: () => {
+                    client.invalidateQueries([getChannel.name]);
+                    toast.success("Member added successfully.");
+                    setOpenPopup(false);
+                  },
+                });
               }}
-              type={"submit"}
+              isLoading={isAdding}
+              type={"button"}
               color={"success"}
             />
           </div>
-        </form>
+        </div>
       );
     } else if (action === "delete") {
       setPopupElement(
-        <form onSubmit={handleDelete} noValidate className="row">
+        <div className="row">
           <div className="col-12">
             <h3 className="text-center text-white pb-4">Enter Your Password</h3>
             <Input
@@ -176,13 +202,20 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
             <Button
               title={"Delete Forever (This action can't be undo !"}
               action={() => {
-                setOpenPopup(false);
+                deleteMutate(channel?._id || "", {
+                  onSuccess: () => {
+                    client.invalidateQueries([getUserChannels.name]);
+                    toast.success("Channel deleted successfully.");
+                    setOpenPopup(false);
+                  },
+                });
               }}
-              type={"submit"}
+              isLoading={isDeleting}
+              type={"button"}
               color={"danger"}
             />
           </div>
-        </form>
+        </div>
       );
     } else {
       setPopupElement(
@@ -258,9 +291,8 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
             <div className="col-lg-6 col-12">
               <Button
                 title={"Edit"}
-                action={() => {
-                  setOpenPopup(false);
-                }}
+                action={() => {}}
+                isLoading={isUpdating}
                 type={"submit"}
                 color={"success"}
               />
@@ -275,7 +307,7 @@ const ChannelView = ({ image, name, id }: IChannelView) => {
   const { data, isLoading, isError } = useQuery(
     [getChannel.name, id],
     () => getChannel(id),
-    { keepPreviousData: true }
+    { keepPreviousData: true, staleTime: Infinity, cacheTime: Infinity }
   );
   const channel = data?.data?.data?.getChannel;
 

@@ -3,6 +3,7 @@ import { ILoginParam, login } from "../api/auth";
 import React, { PropsWithChildren, useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { setAxiosToken } from "../api";
+import useProfile from "./useProfile.tsx";
 
 export interface ILoginData {
   username: string;
@@ -99,6 +100,7 @@ const useAuth = () => {
 
 const WithAuth = ({ children }: PropsWithChildren<any>) => {
   const auth = useAuth();
+  useProfile();
 
   if (!auth.isLoggedIn) {
     return <Navigate to={"/login"} />;

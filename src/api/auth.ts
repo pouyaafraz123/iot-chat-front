@@ -58,7 +58,7 @@ export function signup(data: ISignupParam): Promise<IResponse<ISignup>> {
     query: `
       mutation signup($data:signupParam!){
         signup(data:$data){
-          id
+          _id
           username
           email
           avatar
@@ -73,5 +73,19 @@ export function signup(data: ISignupParam): Promise<IResponse<ISignup>> {
       }
     `,
     variables: { data },
+  });
+}
+
+export function getCurrentUser(): Promise<
+  IResponse<{ getCurrentUser: { _id: string } }>
+> {
+  return apiCaller.post(``, {
+    query: `
+      {
+        getCurrentUser{
+          _id
+        }
+      }
+    `,
   });
 }

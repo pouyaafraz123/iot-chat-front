@@ -34,8 +34,48 @@ export interface IGetChannels {
   getChannels: IPaginationTableList<IChannel>;
 }
 
+export interface IGetUserChannels {
+  getUserChannels: IChannel[];
+}
+
 export interface IGetChannel {
   getChannel: IChannel;
+}
+
+export function getUserChannels(
+  id: string
+): Promise<IResponse<IGetUserChannels>> {
+  return apiCaller.post(``, {
+    query: `
+      {
+        getUserChannels(id: "${id}") {
+            _id
+            name
+            creator {
+              _id
+              username
+              email
+              avatar
+              age
+              phone
+              firstname
+              lastname
+              displayName
+              bio
+              type
+            }
+            description
+            members {
+              _id
+              displayName
+              avatar
+            }
+            displayName
+            image
+        }
+      }
+    `,
+  });
 }
 
 export function getChannels({
@@ -47,8 +87,8 @@ export function getChannels({
     query: `
       {
         getChannels(page:${page},${
-            per_page ? "per_page:" + per_page + "," : ""
-            }query:"${query || ""}") {
+      per_page ? "per_page:" + per_page + "," : ""
+    }query:"${query || ""}") {
           list {
             _id
             name
@@ -85,7 +125,7 @@ export function getChannels({
 
 export function useAllChannels() {
   return useInfiniteQuery<IGetChannels>(
-    [getChannels.name],
+    [getUserChannels.name],
     async ({ pageParam = 1 }) => {
       const params: IPaginationParam = { page: pageParam };
       const response = await getChannels({
@@ -111,28 +151,22 @@ export function createChannel(data: IChannelParam): Promise<IResponse<any>> {
       mutation createChannel($data: channelParam!) {
         createChannel(data: $data) {
           _id
-          name
-          creator {
-            _id
-            username
-            email
-            avatar
-            age
-            phone
-            firstname
-            lastname
-            displayName
-            bio
-            type
-          }
-          description
-          members {
-            _id
-            displayName
-            avatar
-          }
-          displayName
-          image
+        }
+      }
+    `,
+    variables: { data },
+  });
+}
+
+export function updateChannel(
+  id: string,
+  data: IChannelParam
+): Promise<IResponse<any>> {
+  return apiCaller.post(``, {
+    query: `
+      mutation updateChannel($data: channelParam!) {
+        updateChannel(id: "${id}",data: $data) {
+          _id
         }
       }
     `,
@@ -168,6 +202,31 @@ export function getChannel(id: string): Promise<IResponse<IGetChannel>> {
           }
           displayName
           image
+        }
+      }
+    `,
+  });
+}
+
+export function deleteChannel(id: string): Promise<IResponse<any>> {
+  return apiCaller.post(``, {
+    query: `
+      mutation {
+        deleteChannel(id: "${id}")
+      }
+    `,
+  });
+}
+
+export function addMemberToChannel(
+  id: string,
+  user_id: string
+): Promise<IResponse<any>> {
+  return apiCaller.post(``, {
+    query: `
+      mutation {
+        addMember(id:"${id}",user_id:"${user_id}"){
+          _id
         }
       }
     `,
