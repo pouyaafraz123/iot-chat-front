@@ -46,7 +46,9 @@ export function getChannels({
   return apiCaller.post(``, {
     query: `
       {
-        getChannels {
+        getChannels(page:${page},${
+            per_page ? "per_page:" + per_page + "," : ""
+            }query:"${query || ""}") {
           list {
             _id
             name
