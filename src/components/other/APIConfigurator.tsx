@@ -36,7 +36,6 @@ export function APIConfigurator({
         return Promise.reject(error);
       }*/
 
-
       onError(errorRes?.message || "Something went wrong!");
       if (errorRes?.status === 401) {
         logout();

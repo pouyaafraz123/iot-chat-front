@@ -33,7 +33,7 @@ export function login(data: ILoginParam): Promise<IResponse<ILogin>> {
       query login($data: loginParam!) {
         login(data: $data) {
           user {
-            id
+            _id
             username
             email
             avatar

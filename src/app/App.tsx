@@ -29,10 +29,11 @@ function App() {
 }
 
 const Router = () => {
-
   return (
     <Routes>
-      {router.map((r) => <Route {...r} />)}
+      {router.map((r) => (
+        <Route {...r} />
+      ))}
     </Routes>
   );
 };

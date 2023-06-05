@@ -56,7 +56,7 @@ const Register = () => {
       : null;
   };
 
-  const { mutate,isLoading } = useMutation(signup);
+  const { mutate, isLoading } = useMutation(signup);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,23 +88,26 @@ const Register = () => {
     }
 
     if (isValid) {
-      mutate({
-        username: inputs.username,
-        password: inputs.password,
-        age: Number(inputs.age),
-        bio: inputs.bio,
-        avatar: inputs.avatar,
-        email: inputs.email,
-        phone: inputs.phone,
-        displayName: inputs.displayName,
-        firstname: inputs.firstName,
-        lastname: inputs.lastName,
-      },{
-          onSuccess:()=>{
-              toast.success("User registered successfully.")
-              navigate("/login")
-          }
-      });
+      mutate(
+        {
+          username: inputs.username,
+          password: inputs.password,
+          age: Number(inputs.age),
+          bio: inputs.bio,
+          avatar: inputs.avatar,
+          email: inputs.email,
+          phone: inputs.phone,
+          displayName: inputs.displayName,
+          firstname: inputs.firstName,
+          lastname: inputs.lastName,
+        },
+        {
+          onSuccess: () => {
+            toast.success("User registered successfully.");
+            navigate("/login");
+          },
+        }
+      );
     }
   };
   return (

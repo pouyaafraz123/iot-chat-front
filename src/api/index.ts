@@ -8,33 +8,30 @@ const apiCaller = axios.create({
 });
 
 export interface IError {
-  message: string,
-  status: number,
-  data: { [key: string]: string }[]
+  message: string;
+  status: number;
+  data: { [key: string]: string }[];
 }
-
-
-
 
 export interface IResponse<T> extends AxiosResponse {
   errors?: IError[];
-  data: {data: T};
+  data: { data: T };
 }
 
 export interface IPagination {
   count: number;
   page: number;
-  per_page: string;
+  per_page: number;
 }
 
 export interface IPaginationParam {
   page: number;
   per_page?: number;
-  query?:string;
+  query?: string;
 }
 
 export interface IPaginationTableList<T> extends IPagination {
-  data: T[];
+  list: T[];
 }
 
 export const setAxiosToken = (token: string | null): void => {

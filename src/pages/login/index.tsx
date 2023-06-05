@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.tsx";
 
 const Login = () => {
-  const { login,isLoggedIn,isLogging} = useAuth();
+  const { login, isLoggedIn, isLogging } = useAuth();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     username: "",
@@ -24,7 +24,7 @@ const Login = () => {
     if (isLoggedIn) {
       navigate("/");
     }
-  }, [isLoggedIn,navigate]);
+  }, [isLoggedIn, navigate]);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!event.currentTarget.checkValidity()) {

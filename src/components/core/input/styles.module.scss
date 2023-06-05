@@ -38,7 +38,8 @@
       box-shadow: 2px 0 10px #7edd70;
     }
 
-    &[data-status="empty"] , &[data-status="invalid"] {
+    &[data-status="empty"],
+    &[data-status="invalid"] {
       border: 1px solid var(--error);
       box-shadow: 2px 0 10px #e69191;
     }
