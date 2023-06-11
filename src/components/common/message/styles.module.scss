@@ -1,0 +1,61 @@
+.Message {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  &[data-user="this"] {
+    justify-content: flex-end;
+  }
+
+  &[data-user="other"] {
+    justify-content: flex-start;
+  }
+
+  &__Image {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+  }
+
+  &__Box {
+    padding: 0 8px 0 8px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 150px;
+
+    &[data-user="this"] {
+      background-color: #415a89;
+    }
+
+    &[data-user="other"] {
+      border: 1px solid #415a89;
+    }
+
+    &__Name {
+      font-size: 14px;
+      color: white;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+    &__Text {
+      font-size: 12px;
+      color: white;
+      width: fit-content;
+      margin-top: 4px;
+    }
+
+    &__Time {
+      font-size: 10px;
+      color: white;
+      margin-bottom: 4px;
+      margin-top: 4px;
+      float: right;
+    }
+  }
+}
